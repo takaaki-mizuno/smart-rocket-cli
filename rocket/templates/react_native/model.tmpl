@@ -1,0 +1,31 @@
+import Faker from 'faker';
+import Base from './Base';
+{%- if definition.has_object_reference() %}
+import {
+{%- for property in definition.get_properties() -%}
+{%- if property.type == 'object' -%}
+    {{ property.object_reference.name }},
+{%- endif -%}
+{%- endfor %}
+} from '.';
+{%- endif %}
+import ModelHelper from '../helpers/ModelHelper';
+
+
+class Model extends Base {
+    static defaultValues = {
+{% for property in definition.get_properties() %}
+        '{{ property.name }}': {{ property.get_default_value() }},
+{%- endfor %}
+    };
+
+    static generateMockData() {
+        return {
+{% for property in definition.get_properties() %}
+            '{{ property.name }}': {{ property.get_mock_value() }},
+{%- endfor %}
+        };
+    }
+}
+
+export default Model;
