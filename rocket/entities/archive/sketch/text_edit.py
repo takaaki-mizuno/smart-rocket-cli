@@ -1,5 +1,5 @@
 from .element import Element
 
 
-class Screen(Element):
+class TextEdit(Element):
     pass

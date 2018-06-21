@@ -15,7 +15,7 @@ class Directory:
         self.delete_directory()
 
     def extract(self):
-        self.temporary_directory = tempfile.TemporaryDirectory()
+        self.temporary_directory = tempfile.TemporaryDirectory().name
         zip_ref = zipfile.ZipFile(self.path, 'r')
         zip_ref.extractall(self.temporary_directory)
         zip_ref.close()
@@ -23,7 +23,7 @@ class Directory:
     def delete_directory(self):
         directory = Path(self.temporary_directory)
         if directory.exists():
-            shutil.rmtree(self.path)
+            shutil.rmtree(self.temporary_directory)
             return True
 
         return False
@@ -32,7 +32,7 @@ class Directory:
         if relative_path[0] != '/':
             relative_path = '/' + relative_path
 
-        return os.path.realpath(self.path + relative_path)
+        return os.path.realpath(self.temporary_directory + relative_path)
 
     def get_real_path_content(self, relative_path):
         path = Path(self.get_real_path(relative_path))

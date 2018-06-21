@@ -30,9 +30,8 @@ class ReactNative(object):
         return "OK"
 
     @classmethod
-    def generate_screen(cls, project_path, screen_name, sketch_file_path):
+    def generate_screen(cls, project_path, sketch_file_path, screen_name=None, ):
 
-        generator = ScreenGenerator(project_path)
-
-
+        generator = ScreenGenerator(project_path, sketch_file_path)
+        generator.generate()
         return "OK"

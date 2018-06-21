@@ -13,5 +13,3 @@ class Validator(BaseValidator):
 
     def validate(self, target):
         pass
-
-
