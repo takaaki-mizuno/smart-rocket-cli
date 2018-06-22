@@ -36,14 +36,14 @@ class SketchService:
         _class = DictionaryHelper.get(layer, '_class', '')
 
         if name.startswith('BUTTON_'):
-            element = Button(object_id, name[7:], layer, directory, parent)
+            element = Button(object_id, name[7:], layer, parent, directory)
         elif _class == 'text':
-            element = Label(object_id, name, layer, directory, parent)
+            element = Label(object_id, name, layer, parent, directory)
         elif _class == 'image':
-            element = Image(object_id, name, layer, directory, parent)
+            element = Image(object_id, name, layer, parent, directory)
         elif name.startswith('TEXTEDIT_'):
-            element = TextEdit(object_id, name[9:], layer, directory, parent)
+            element = TextEdit(object_id, name[9:], layer, parent, directory)
         else:
-            element = View(object_id, name, layer, directory, parent)
+            element = View(object_id, name, layer, parent, directory)
 
         return element

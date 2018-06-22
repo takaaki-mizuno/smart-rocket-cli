@@ -14,6 +14,6 @@ class ColorHelper:
         alpha = DictionaryHelper.get(color, 'alpha', 1)
 
         if alpha == 1:
-            return '#%02x%02x%02x' % (red * 255, green * 255, blue * 255)
+            return '#%02x%02x%02x' % (int(red * 255), int(green * 255), int(blue * 255))
 
-        return '#%02x%02x%02x%02x' % (red * 255, green * 255, blue * 255, alpha * 255)
+        return '#%02x%02x%02x%02x' % (int(red * 255), int(green * 255), int(blue * 255), int(alpha * 255))

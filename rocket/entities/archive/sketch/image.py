@@ -11,3 +11,7 @@ class Image(Element):
         path = DictionaryHelper.get(self.layer, 'image._ref')
         if path is not None:
             self.data['image_path'] = path
+
+    @classmethod
+    def type(cls):
+        return "Image"

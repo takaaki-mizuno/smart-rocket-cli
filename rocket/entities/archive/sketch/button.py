@@ -5,3 +5,7 @@ class Button(Element):
 
     def parse_specific_info(self):
         pass
+
+    @classmethod
+    def type(cls):
+        return "Button"

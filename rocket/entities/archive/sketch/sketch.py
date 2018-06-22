@@ -47,3 +47,7 @@ class Sketch:
             return self.screens[name]
 
         return None
+
+    @classmethod
+    def type(cls):
+        return "Sketch"

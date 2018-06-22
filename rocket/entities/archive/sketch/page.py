@@ -36,3 +36,7 @@ class Page:
             if artboard_info['name'].startswith('SCREEN_'):
                 layer = self.find_layer_by_id(artboard_id)
                 self.screens.append(Screen(artboard_id, artboard_info['name'][7:], layer, self.directory))
+
+    @classmethod
+    def type(cls):
+        return "Page"

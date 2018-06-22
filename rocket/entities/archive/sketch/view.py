@@ -2,4 +2,7 @@ from .element import Element
 
 
 class View(Element):
-    pass
+
+    @classmethod
+    def type(cls):
+        return "View"

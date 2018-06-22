@@ -16,7 +16,8 @@ class ScreenGenerator(BaseGenerator):
         if name is None:
             for name, screen in sketch.screens.items():
                 print(name)
-                print(screen.elements)
+                print(screen.generate_react_native_component())
+                print(screen.generate_react_native_styles())
 
             return
 
@@ -24,4 +25,4 @@ class ScreenGenerator(BaseGenerator):
         if screen is None:
             return
 
-        print(screen.elements)
+        print(screen.generate_react_native_component())

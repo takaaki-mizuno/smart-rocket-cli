@@ -2,4 +2,7 @@ from .element import Element
 
 
 class Screen(Element):
-    pass
+
+    @classmethod
+    def type(cls):
+        return "Screen"

@@ -13,3 +13,7 @@ class Label(Element):
         self.data['attribute_strings'] = []
         for attribute in DictionaryHelper.get(self.layer, 'attributedString.attributes', []):
             self.data['attribute_strings'].append(AttributeString(self.data['string'], attribute))
+
+    @classmethod
+    def type(cls):
+        return "Label"
