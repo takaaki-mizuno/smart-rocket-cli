@@ -7,15 +7,15 @@ from collections import OrderedDict
 
 class Sketch:
 
-    def __init__(self, directory):
-        self.directory = directory
+    def __init__(self, archive):
+        self.archive = archive
         self.screens = {}
         self.parse_screens()
 
     def parse_screens(self):
-        meta = json.loads(self.directory.get_real_path_content('meta.json'), object_pairs_hook=OrderedDict)
+        meta = json.loads(self.archive.get_real_path_content('meta.json'), object_pairs_hook=OrderedDict)
         for page_id, page_info in meta['pagesAndArtboards'].items():
-            page = json.loads(self.directory.get_real_path_content('pages/' + page_id + '.json'),
+            page = json.loads(self.archive.get_real_path_content('pages/' + page_id + '.json'),
                               object_pairs_hook=OrderedDict)
             if 'artboards' in page_info:
                 for artboard_id, artboard_info in page_info['artboards'].items():
@@ -23,8 +23,9 @@ class Sketch:
                     if name.startswith('SCREEN_'):
                         artboard = self._find_object_id(DictionaryHelper.get(page, 'layers', []), artboard_id)
                         if artboard is not None:
-                            screen = Screen(artboard_id, name[7:], artboard, None, self.directory)
-                            screen.elements = SketchService.parse_screen_elements(screen, self.directory)
+                            names = []
+                            screen = Screen(artboard_id, name[7:], artboard, None, self.archive, names)
+                            screen.elements = SketchService.parse_screen_elements(screen, self.archive, names)
                             self.screens[name[7:]] = screen
 
     def _find_object_id(self, layers, target_object_id):

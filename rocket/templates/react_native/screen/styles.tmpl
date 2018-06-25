@@ -3,9 +3,7 @@ import {StyleSheet} from "react-native";
 import ThemeHelper from "../../helpers/ThemeHelper";
 
 const Styles: any = StyleSheet.create({
-    container: {
-        backgroundColor: ThemeHelper.getColor('background'),
-    },
+    {{ screen.generate_react_native_styles() }}
 });
 
 export default Styles;

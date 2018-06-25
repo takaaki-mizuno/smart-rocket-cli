@@ -4,11 +4,12 @@ import {StyleSheet, View} from "react-native";
 import Styles from "./Styles";
 import BaseScreen from "../Base/Screen";
 import {locale} from "../../helpers"
+{{ screen.get_import_statements() }}
 
 class Screen extends BaseScreen {
 
     getTitle() {
-        return locale('screen.{{ locale_name }}.title');
+        return locale('screen.{{ screen.get_locale_name() }}.title');
     }
 
     getStyles() {
@@ -19,9 +20,11 @@ class Screen extends BaseScreen {
         return true;
     }
 
+{{ screen.get_additional_functions() }}
+
     getContent() {
         return (
-            <View style={Styles.container}/>
+        {{ screen.generate_react_native_component() }}
         );
     }
 }

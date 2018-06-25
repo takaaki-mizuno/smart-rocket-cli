@@ -1,0 +1,119 @@
+// @flow
+import * as React from "react";
+import {StyleSheet, View} from "react-native";
+import Text from "../../../components/Text"
+import DeviceHelper from "../../../helpers/DeviceHelper";
+import Icon from "../../../components/Icon";
+import ThemeHelper from "../../../helpers/ThemeHelper";
+
+type ButtonProps = {
+    onPress: () => mixed,
+    label?: string,
+    labelTypography: string,
+    disabled?: boolean,
+    width: number,
+    height: number,
+    iconName?: string,
+    iconColor: any,
+    paddingTop: number,
+    paddingBottom: number,
+    paddingLeft: number,
+    paddingRight: number,
+    style: any,
+};
+
+class RowButton extends React.PureComponent<ButtonProps> {
+
+    static defaultProps = {
+        width: {width},
+        height: {height},
+        paddingTop: {paddingTop},
+        paddingBottom: {paddingBottom},
+        paddingLeft: {paddingLeft},
+        paddingRight: {paddingRight},
+        style: {},
+        labelTypography: "button",
+        iconColor: "primary",
+    };
+
+    computeStyle() {
+        const {
+            width,
+            height,
+            paddingTop,
+            paddingBottom,
+            paddingLeft,
+            paddingRight,
+        } = this.props;
+        return StyleSheet.create({
+            outer: {
+                flex: 1,
+                alignSelf: 'stretch',
+                backgroundColor: 'transparent',
+                ...{width: width + 112, height, paddingBottom, paddingLeft, paddingRight, paddingTop}
+            },
+            button: {
+                backgroundColor: ThemeHelper.getColor('buttonBackground'),
+                borderRadius: height / 2,
+                ...{width, height}
+            },
+            inner: {
+                flex: 1,
+                flexDirection: 'row',
+                flexWrap: 'nowrap',
+            },
+            label: {
+                left: 18,
+                width: width - 72,
+                justifyContent: 'center',
+                alignItems: 'center',
+                alignSelf: 'center',
+            },
+            icon: {
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingLeft: 0,
+                width: 32,
+                height: 32,
+                left: 16,
+                top: 4,
+            },
+        });
+    }
+
+    render(): React.Node {
+        const {
+            style, onPress, iconName, label, disabled, width, height, iconColor
+        } = this.props;
+        let Touchable: React.ComponentType<*> = DeviceHelper.getTouchableElement(disabled);
+        const computedStyle = this.computeStyle();
+        let icon = null;
+        if (iconName) {
+            icon = (
+                <View style={computedStyle.icon}>
+                    <Icon color={iconColor} size={24} name={iconName}/>
+                </View>
+            );
+        }
+{% raw %}
+        return (
+            <View style={{height: height}}>
+                <View style={[style, computedStyle.outer]}>
+                    <Touchable {...{onPress}} style={computedStyle.button}>
+                        <View style={computedStyle.button}>
+                            <View style={computedStyle.inner}>
+                                {icon}
+                                <View style={computedStyle.label}>
+                                    <Text>{label}</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </Touchable>
+                </View>
+            </View>
+        );
+    }
+{% endraw %}
+}
+
+export default RowButton;

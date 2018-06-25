@@ -1,1 +1,1 @@
-from .directory import Directory
+from .archive import Archive

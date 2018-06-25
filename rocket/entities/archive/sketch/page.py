@@ -4,8 +4,8 @@ from .screen import Screen
 
 class Page:
 
-    def __init__(self, page_id, artboards, directory):
-        self.directory = directory
+    def __init__(self, page_id, artboards, archive):
+        self.archive = archive
         self.artboards = artboards
         self.page_id = page_id
         self.json = None
@@ -29,13 +29,13 @@ class Page:
 
     def parse(self):
         self.json = json.loads(
-            self.directory.get_real_path_content('pages/' + self.page_id + '.json'),
+            self.archive.get_real_path_content('pages/' + self.page_id + '.json'),
             object_pairs_hook=True
         )
         for artboard_id, artboard_info in self.artboards.items():
             if artboard_info['name'].startswith('SCREEN_'):
                 layer = self.find_layer_by_id(artboard_id)
-                self.screens.append(Screen(artboard_id, artboard_info['name'][7:], layer, self.directory))
+                self.screens.append(Screen(artboard_id, artboard_info['name'][7:], layer, self.archive))
 
     @classmethod
     def type(cls):

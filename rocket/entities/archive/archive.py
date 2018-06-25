@@ -5,7 +5,7 @@ import tempfile
 import zipfile
 
 
-class Directory:
+class Archive:
 
     def __init__(self, path):
         self.path = path

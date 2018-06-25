@@ -1,11 +1,11 @@
-from rocket.entities.archive import Directory
+from rocket.entities.archive import Archive
 
 
 class ArchiveService:
 
     @classmethod
     def extract(cls, path):
-        directory = Directory(path)
-        directory.extract()
+        archive = Archive(path)
+        archive.extract()
 
-        return directory
+        return archive

@@ -1,11 +1,11 @@
 from ..helpers import DictionaryHelper
-from ..entities.archive.sketch import Button, Label, Image, View, TextEdit
+from ..entities.archive.sketch import Button, Label, Image, View, TextEdit, Icon
 
 
 class SketchService:
 
     @classmethod
-    def parse_screen_elements(cls, element, directory):
+    def parse_screen_elements(cls, element, archive, names: list):
         elements = []
         if 'layers' not in element.layer:
             return
@@ -13,16 +13,16 @@ class SketchService:
         if layers is None:
             return
         for layer in layers:
-            element_object = cls.parse_element(layer, element, directory)
+            element_object = cls.parse_element(layer, element, archive, names)
             if element_object is not None:
-                children = cls.parse_screen_elements(element_object, directory)
+                children = cls.parse_screen_elements(element_object, archive, names)
                 element_object.elements = children
                 elements.append(element_object)
 
         return elements
 
     @classmethod
-    def parse_element(cls, layer, parent, directory):
+    def parse_element(cls, layer, parent, archive, names: list):
         object_id = DictionaryHelper.get(layer, 'do_objectID')
 
         if object_id is None:
@@ -36,14 +36,18 @@ class SketchService:
         _class = DictionaryHelper.get(layer, '_class', '')
 
         if name.startswith('BUTTON_'):
-            element = Button(object_id, name[7:], layer, parent, directory)
+            element = Button(object_id, name[7:], layer, parent, archive, names)
         elif _class == 'text':
-            element = Label(object_id, name, layer, parent, directory)
+            element = Label(object_id, name, layer, parent, archive, names)
         elif _class == 'image':
-            element = Image(object_id, name, layer, parent, directory)
+            element = Image(object_id, name, layer, parent, archive, names)
         elif name.startswith('TEXTEDIT_'):
-            element = TextEdit(object_id, name[9:], layer, parent, directory)
+            element = TextEdit(object_id, name[9:], layer, parent, archive, names)
+        elif name.startswith('ICON_'):
+            element = Icon(object_id, name[5:], layer, parent, archive, names)
+        elif name.startswith('VIEW_'):
+            element = View(object_id, name[5:], layer, parent, archive, names)
         else:
-            element = View(object_id, name, layer, parent, directory)
+            element = View(object_id, name, layer, parent, archive, names)
 
         return element
